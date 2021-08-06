@@ -64,12 +64,12 @@ def download_chapter_images(manga_path: str, chapter_path: str, images, sleep: f
   if not os.path.exists(basepath):
     os.mkdir(basepath)
     i = 0
-    for image in images:
-      i += 1
-      filename, extension = os.path.splitext(image)
-      urllib.request.urlretrieve(image, "%s/%03d%s" % (basepath, i, extension))
-      time.sleep(sleep)
-
-
-
-    
+    try:
+      for image in images:
+        i += 1
+        filename, extension = os.path.splitext(image)
+        urllib.request.urlretrieve(image, "%s/%03d%s" % (basepath, i, extension))
+        time.sleep(sleep)
+    except:
+      time.sleep(5)
+      download_chapter_images(manga_path, chapter_path, images, sleep)
