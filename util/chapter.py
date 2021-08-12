@@ -35,13 +35,14 @@ def get_all_chapters(manga_id: str, sleep: int, silent=True, lang="en"):
     time.sleep(sleep)
     if len(to_add) is not 100:
       break
-  return util.sort_dict(chapters)
+  return chapters
 
 def get_chapters(manga_id: str, limit=10, offset=0, lang="en"):
   params = {
     "limit": limit,
     "offset": offset,
-    "translatedLanguage[]": lang
+    "translatedLanguage[]": lang,
+    "order[chapter]": "asc"
   }
   request = requests.get("https://api.mangadex.org/manga/%s/feed" % (manga_id), params=params)
   json = request.json()
