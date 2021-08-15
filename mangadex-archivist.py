@@ -65,6 +65,9 @@ def gather_manga_in_list():
       manganame = None
       if "en" in manga_info["attributes"]["title"]:
         manganame = manga_info["attributes"]["title"]["en"]
+      if "jp" in manga_info["attributes"]["title"]:
+        manganame = manga_info["attributes"]["title"]["jp"]
+        print("Manga with id '%s' has no english title, defaulting to japanese.")
       elif len(manga_info["attributes"]["title"]) > 0:
         manganame = list(manga_info["attributes"]["title"].values[0])
         print("Title in english for manga with id '%s' not found, defaulting to first item in list." % manga_id)
