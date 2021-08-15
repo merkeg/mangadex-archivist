@@ -62,9 +62,20 @@ def gather_manga_in_list():
     if manga_id not in existing_mangalist:
       manga_info = manga.get_manga_info(manga_id)
 
+      manganame = None
+      if "en" in manga_info["attributes"]["title"]:
+        manganame = manga_info["attributes"]["title"]["en"]
+      elif len(manga_info["attributes"]["title"]) > 0:
+        manganame = list(manga_info["attributes"]["title"].values[0])
+        print("Title in english for manga with id '%s' not found, defaulting to first item in list." % manga_id)
+      else:
+        manganame = manga_id
+        print("Manga with id '%s' has no title in any language, defaulting to manga-id instead.")
+
+
       entry = {
         "reading_status": reading_status,
-        "friendly_name": filename.clean_filename(manga_info["attributes"]["title"]["en"]).rstrip(' .')
+        "friendly_name": filename.clean_filename(manganame).rstrip(' .')
       }
       existing_mangalist[manga_id] = entry
 
